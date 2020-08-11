@@ -21,14 +21,23 @@
  *  { word: "the", },
  *  { word: "store", pos: "noun" }
  *  { word: "," }
- *  ....
+ *  .... [noun]
  *
  * There are multiple ways to do this, but you may want to use regular expressions.
  * Please go through this lesson: https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/regular-expressions/
  */
 function parseStory(rawStory) {
   // Your code here.
-  return {}; // This line is currently wrong :)
+  const storyWords = rawStory.split(' ');
+  console.log(storyWords);
+  //let wordInBrackets = new RegExp(/\[.\]/);
+  const adjective = /\[adjective\]/;//redo
+  const matches = storyWords.filter(value => /\[adjective\]/.test(value));//delete
+  
+  console.log(matches);//delete
+  console.log(adjective.test(storyWords[5]));//now this doesnt work because string values different
+
+  return rawStory; 
 }
 
 /**
