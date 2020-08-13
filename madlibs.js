@@ -95,13 +95,13 @@ getRawStory()
       if (word.word !== "." && word.word !== ","){
         //console.log(word.word);
         // previewDiv.innerHTML += ` <span>${word.word}</span>`;
-       if (word.pos){
-        editDiv.innerHTML +=` <input type="text" placeholder=${word.pos}>`;
-        previewDiv.innerHTML += ` <span>${word.word}</span>`;
-       }else {
-        previewDiv.innerHTML += ` ${word.word}`;
-        editDiv.innerHTML += ` ${word.word}`;
-       }
+          if (word.pos){
+            editDiv.innerHTML +=` <input type="text" placeholder=${word.pos}>`;
+            previewDiv.innerHTML += ` <span>${word.word}</span>`;
+          }else {
+            previewDiv.innerHTML += ` ${word.word}`;
+            editDiv.innerHTML += ` ${word.word}`;
+          }
       } else if (word.word === "." || word.word === ",") {
         previewDiv.innerHTML += `${word.word}`;
         //console.log("punctuation");
