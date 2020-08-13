@@ -1,4 +1,6 @@
 /**
+ * 
+ 
  * Complete the implementation of parseStory.
  *
  * parseStory retrieves the story as a single string from story.txt
@@ -31,19 +33,51 @@ function parseStory(rawStory) {
   const storyWords = rawStory.split(' ');
   console.log(storyWords);
   //all regex
-  const allMatcher = /[a-z]+\[[a-z]+\]/g;
-  const adjectives = /[a-z]+\[[a]+\]/g;
-  const nationality = /[a-z]+\[na+\]/g;
-  const person = /[a-z]+\[p+\]/g;
-  const verb = /[a-z]+\[v+\]/g;
-  const nouns = /[a-z]+\[[n]+\]/g;
-  const numbers = /[a-z]+\[nu+\]/g;
-  const shape = /[a-z]+\[[s]+\]/g;
-  const foods =  /[a-z]+\[[f]+\]/g;
-  // const arrayOfRegex = [adjectives, nationality, person, verb, nouns, numbers, shape, foods];
-  //const matches = storyWords.filter(value => foods.test(value));
-  //console.log(matches);
-  const objsOfWords= [];
+  const rex= /\[.*\]/gi;
+  const  objsOfWords = storyWords.map(word=> {
+    const wordOnly = word.replace(word.match(rex), "");
+    let posRe = word.match(rex);
+  
+    //  console.log(posRe)
+     
+  if( posRe===null){
+    console.log("noPos===null")
+    return {word:wordOnly};
+  }
+  posRe= posRe[0];
+   switch(posRe){
+      case  "[na]":
+      
+      return {word:wordOnly, pos : "nationality" };
+      case "[p]":
+        return {word:wordOnly, pos : "person" };
+      case "[n]":
+        return {word:wordOnly, pos : "noun" };
+        
+      case "[v]":
+      return {word:wordOnly, pos : "verb" };
+      
+      case  "[a]":
+      return {word:wordOnly, pos : "adjective" };
+      
+      case  "[f]":
+      return {word:wordOnly, pos : "food" };
+
+      case  "[s]":
+      return {word:wordOnly, pos : "shapes" };
+
+      case  "[nu]":
+      return {word:wordOnly, pos : "number" };
+
+    }  
+  })
+  console.log(objsOfWords)
+
+
+
+
+//old code
+ /*  const objsOfWords= [];
   for ( const word of storyWords){
     if ((word.match(allMatcher)) !== null){
       objsOfWords.push({word: word, pos:word })
@@ -51,7 +85,7 @@ function parseStory(rawStory) {
       objsOfWords.push({word: word})
     }
   }
-  console.log(objsOfWords)
+  console.log(objsOfWords) */
   /* 
   const wordObjs = storyWords.map(word => {
     //console.log(word.match(allMatcher))
@@ -79,8 +113,8 @@ function parseStory(rawStory) {
 getRawStory()
   .then(parseStory)
   .then((processedStory) => {
-    const previewDiv = document.querySelector(".madLibsPreview");
-    const editDiv = document.querySelector(".madLibsEdit");
+    const previewParagraph = document.querySelector(".previewParagraph");
+    const editParagraph = document.querySelector(".editParagraph");
     
     // word is : {word : "some word", pos: "adjective"}
     for (let word of processedStory){
@@ -88,7 +122,7 @@ getRawStory()
       // if (pos in word){
       //   previewDiv.innerHTML +=`<input type="text" placeholder=${word.pos}>`
       // }
-      console.log(word.pos)
+      // console.log(word.pos)
 
       
       
@@ -96,19 +130,26 @@ getRawStory()
         //console.log(word.word);
         // previewDiv.innerHTML += ` <span>${word.word}</span>`;
           if (word.pos){
-            editDiv.innerHTML +=` <input type="text" placeholder=${word.pos}>`;
-            previewDiv.innerHTML += ` <span>${word.word}</span>`;
+            editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//  ?? id=${word.pos}
+            previewParagraph.innerHTML += ` <mark>${word.word}</mark>`;//?? id=${word.pos}
+            //if word has a pos then make the input live changing
+            /* const input= document.querySelector(`#${word.pos}`);
+            input.addEventListener("change",(e)=>{
+              let update= e.target.value;
+              const span= document.querySelector(`#${word.pos}`);
+              span.innerText=update;
+            }) */
           }else {
-            previewDiv.innerHTML += ` ${word.word}`;
-            editDiv.innerHTML += ` ${word.word}`;
+            previewParagraph.innerHTML += ` ${word.word}`;
+            editParagraph.innerHTML += ` ${word.word}`;
           }
       } else if (word.word === "." || word.word === ",") {
-        previewDiv.innerHTML += `${word.word}`;
+        previewParagraph.innerHTML += `${word.word}`;
         //console.log("punctuation");
       }
     }
-    
-    console.log('processedStory  :  '+processedStory);
+
+    // console.log('processedStory  :  '+processedStory);
 
   });
 
