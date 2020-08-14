@@ -135,19 +135,19 @@ getRawStory()
         //console.log(word.word);
           if (word.pos){
             // console.log("inside if")
-            const input = document.createElement("input");
-            input.setAttribute("maxlength", "20");
+            // const input = document.createElement("input");
+            // input.setAttribute("maxlength", "20");
             // input.setAttribute("type", "text");
             // input.setAttribute("placeholder", `${word.pos}`);
             
-            //alternative input- trying to add space around input, also dot/commas doesnt show in edit mode
-            //  editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//doesnt work becuase placeholder doesnt change in console.log
-            //  const input= document.querySelector("input");
+            //alternative input - add space around input
+             editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;
+             const input= document.querySelector("input");
 
             const output = document.createElement("mark");
             output.innerHTML+=`${word.word}`;
             
-            editParagraph.appendChild(input);
+            // editParagraph.appendChild(input);
             previewParagraph.appendChild(output);
             // console.log("hi",input)
             // console.log("hi", output)
@@ -174,13 +174,14 @@ getRawStory()
             // input.addEventListener("input", e => {
             // console.log("hello")
             // })
-          }else {
+          }else {//space between words
             previewParagraph.innerHTML += ` ${word.word}`;
             editParagraph.innerHTML += ` ${word.word}`;
           }
-      } else  /* if (word.word === "." || word.word === ",")  */ {
+      } else  {  /* if (word.word === "." || word.word === ",") add no space before */
         // console.log(word.word)
         previewParagraph.innerHTML += `${word.word}`;
+        editParagraph.innerHTML += `${word.word}`;
         //console.log("punctuation");
       }
       
