@@ -31,7 +31,7 @@
 function parseStory(rawStory) {
   // Your code here.
   const storyWords = rawStory.split(' ');
-  console.log(storyWords);
+  // console.log(storyWords);
   //all regex
   const rex= /\[.*\]/gi;
   const  objsOfWords = storyWords.map(word=> {
@@ -41,7 +41,7 @@ function parseStory(rawStory) {
     //  console.log(posRe)
      
   if( posRe===null){
-    console.log("noPos===null")
+    // console.log("noPos===null")
     return {word:wordOnly};
   }
   posRe= posRe[0];
@@ -71,7 +71,7 @@ function parseStory(rawStory) {
 
     }  
   })
-  console.log(objsOfWords)
+  // console.log(objsOfWords)
 
 
 
@@ -113,8 +113,8 @@ function parseStory(rawStory) {
 getRawStory()
   .then(parseStory)
   .then((processedStory) => {
-    const previewParagraph = document.querySelector(".previewParagraph");
-    const editParagraph = document.querySelector(".editParagraph");
+    const previewParagraph = document.querySelector(".madLibsPreview");
+    const editParagraph = document.querySelector(".madLibsEdit");
     
     // word is : {word : "some word", pos: "adjective"}
     for (let word of processedStory){
@@ -124,14 +124,44 @@ getRawStory()
       // }
       // console.log(word.pos)
 
-      
+      // const inputs = document.querySelectorAll("input")
+      // const highlited = document.querySelectorAll("mark")
+      // for (const ele of inputs) {
+        
+      // }
+    
       
       if (word.word !== "." && word.word !== ","){
         //console.log(word.word);
-        // previewDiv.innerHTML += ` <span>${word.word}</span>`;
           if (word.pos){
-            editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//  ?? id=${word.pos}
-            previewParagraph.innerHTML += ` <mark>${word.word}</mark>`;//?? id=${word.pos}
+            // console.log("inside if")
+            const input = document.createElement("input");
+            input.setAttribute("maxlength", "20");
+            // input.setAttribute("type", "text");
+            // input.setAttribute("placeholder", `${word.pos}`);
+            
+            //alternative input- trying to add space around input, also dot/commas doesnt show in edit mode
+            //  editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//doesnt work becuase placeholder doesnt change in console.log
+            //  const input= document.querySelector("input");
+
+            const output = document.createElement("mark");
+            output.innerHTML+=`${word.word}`;
+            
+            editParagraph.appendChild(input);
+            previewParagraph.appendChild(output);
+            // console.log("hi",input)
+            // console.log("hi", output)
+            input.addEventListener("input", (e) => {
+              console.log(e.target)
+              // console.log("hello")
+               output.innerHTML = input.value;
+            })
+           
+            
+
+            //old code
+            // editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//  ?? id=${word.pos}
+            // previewParagraph.innerHTML += ` <mark>${word.word}</mark>`;//?? id=${word.pos}
             //if word has a pos then make the input live changing
             /* const input= document.querySelector(`#${word.pos}`);
             input.addEventListener("change",(e)=>{
@@ -139,14 +169,21 @@ getRawStory()
               const span= document.querySelector(`#${word.pos}`);
               span.innerText=update;
             }) */
+            // console.log(input)
+            // const input = document.querySelector("input")
+            // input.addEventListener("input", e => {
+            // console.log("hello")
+            // })
           }else {
             previewParagraph.innerHTML += ` ${word.word}`;
             editParagraph.innerHTML += ` ${word.word}`;
           }
-      } else if (word.word === "." || word.word === ",") {
+      } else  /* if (word.word === "." || word.word === ",")  */ {
+        // console.log(word.word)
         previewParagraph.innerHTML += `${word.word}`;
         //console.log("punctuation");
       }
+      
     }
 
     // console.log('processedStory  :  '+processedStory);
