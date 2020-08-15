@@ -155,7 +155,10 @@ getRawStory()
               // console.log("hello")
                output.innerHTML = input.value;
                //update the obj word in arrOfObj
-               word.word= input.value;
+               if (input.value){
+                word.word= input.value;
+               }else {word.word=`${word.pos}`; output.innerText=`${word.word}`;}
+               
                console.log(word)
             })
 
@@ -202,20 +205,21 @@ getRawStory()
       
     } // THE END OF THE LOOP
     const inputFields = document.querySelectorAll("input");
-   
       for (let i=0; i<inputFields.length; i++){
-        inputFields[i].addEventListener("keypress", e=>{
-          console.log(e.target.id=== inputFields[i])//false ===doesnt exist
-
-          if (e.key === "Enter" && e.target.id=== inputFields[i]){
-            document.querySelector(`#${inputFields[i+1]}`).focus();
+        inputFields[i].addEventListener("keypress", e=>{   
+          if (e.key === "Enter" ){
+            if (i===inputFields.length -1){
+              inputFields[0].focus()
+            } else {
+            inputFields[i+1].focus();
+            }
           }
         })
       }
        
     
    
-
+      /* how to select next element with keypress, nextsibling.focus????? */
   /* editParagraph.addEventListener("keypress", e => {
       if (e.key === "Enter"){
         console.log("i was pressed")
@@ -227,6 +231,15 @@ getRawStory()
       }
     }) */
     // console.log('processedStory  :  '+processedStory);
+    // const inputFields = document.querySelectorAll("input");
+   /*  editParagraph.addEventListener("keypress", e => {
+      if (e.key === "Enter"){
+        console.log(e.target)
+        console.log("ello")
+        //console.log(e.target.nextElementSibling.nextElementSibling)
+        return e.target.nextElementSibling.nextElementSibling.focus()
+      }
+    }) */
 
   });
 
