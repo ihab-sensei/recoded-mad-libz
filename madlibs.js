@@ -1,3 +1,4 @@
+// 1- when we erase the text inside the input field the highlighted text is removed peranently
 /**
  * 
  
@@ -73,9 +74,6 @@ function parseStory(rawStory) {
   })
   // console.log(objsOfWords)
 
-
-
-
 //old code
  /*  const objsOfWords= [];
   for ( const word of storyWords){
@@ -136,26 +134,35 @@ getRawStory()
           if (word.pos){
             // console.log("inside if")
             const input = document.createElement("input");
+            const whiteSpace = document.createElement("span");
+            whiteSpace.innerText = " ";
             input.setAttribute("maxlength", "20");
-            // input.setAttribute("type", "text");
-            // input.setAttribute("placeholder", `${word.pos}`);
+            input.setAttribute("type", "text");
+            input.setAttribute("placeholder", `${word.pos}`);
+            editParagraph.appendChild(whiteSpace);
+            editParagraph.appendChild(input);
             
-            //alternative input- trying to add space around input, also dot/commas doesnt show in edit mode
-            //  editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//doesnt work becuase placeholder doesnt change in console.log
-            //  const input= document.querySelector("input");
+            
+            
 
             const output = document.createElement("mark");
-            output.innerHTML+=`${word.word}`;
-            
-            editParagraph.appendChild(input);
+            output.innerText+=`${word.word}`;
             previewParagraph.appendChild(output);
             // console.log("hi",input)
             // console.log("hi", output)
             input.addEventListener("input", (e) => {
-              console.log(e.target)
+              // console.log(e.target.value)
               // console.log("hello")
                output.innerHTML = input.value;
+               //update the obj word in arrOfObj
+               if (input.value){
+                word.word= input.value;
+               }else {word.word=`${word.pos}`; output.innerText=`${word.word}`;}
+               
+               console.log(word)
             })
+
+
            
             
 
@@ -174,19 +181,65 @@ getRawStory()
             // input.addEventListener("input", e => {
             // console.log("hello")
             // })
-          }else {
-            previewParagraph.innerHTML += ` ${word.word}`;
-            editParagraph.innerHTML += ` ${word.word}`;
+          }else {//normal word + space between words
+            const p = document.createElement("span")
+            p.innerText = ` ${word.word}`
+            previewParagraph.appendChild(p)
+            const p2 = document.createElement("span")
+            p2.innerText = ` ${word.word}`
+            editParagraph.appendChild(p2)
+            // previewParagraph.innerHTML += ` ${word.word}`;
+            // editParagraph.innerHTML += ` ${word.word}`;
           }
-      } else  /* if (word.word === "." || word.word === ",")  */ {
+      } else  {  /* if (word.word === "." || word.word === ",") add no space before */
         // console.log(word.word)
-        previewParagraph.innerHTML += `${word.word}`;
+        const p= document.createElement("span");
+        p.innerText= `${word.word}`;
+        previewParagraph.appendChild(p);
+        
+        const p2= document.createElement("span");
+        p2.innerText= `${word.word}`;
+        editParagraph.appendChild(p2);
         //console.log("punctuation");
       }
       
-    }
-
+    } // THE END OF THE LOOP
+    const inputFields = document.querySelectorAll("input");
+      for (let i=0; i<inputFields.length; i++){
+        inputFields[i].addEventListener("keypress", e=>{   
+          if (e.key === "Enter" ){
+            if (i===inputFields.length -1){
+              inputFields[0].focus()
+            } else {
+            inputFields[i+1].focus();
+            }
+          }
+        })
+      }
+       
+    
+   
+      /* how to select next element with keypress, nextsibling.focus????? */
+  /* editParagraph.addEventListener("keypress", e => {
+      if (e.key === "Enter"){
+        console.log("i was pressed")
+        let input = document.querySelector("input");
+        console.log(input)
+          console.log("focus?")
+          input.nextElementSibling.focus();
+          input = input.nextElementSibling;
+      }
+    }) */
     // console.log('processedStory  :  '+processedStory);
+    // const inputFields = document.querySelectorAll("input");
+   /*  editParagraph.addEventListener("keypress", e => {
+      if (e.key === "Enter"){
+        console.log(e.target)
+        console.log("ello")
+        //console.log(e.target.nextElementSibling.nextElementSibling)
+        return e.target.nextElementSibling.nextElementSibling.focus()
+      }
+    }) */
 
   });
 
