@@ -47,27 +47,28 @@ function parseStory(rawStory) {
   posRe= posRe[0];
    switch(posRe){
       case  "[na]":
-      
-      return {word:wordOnly, pos : "nationality" };
+        return {word:wordOnly, pos : "nationality" };
+        
       case "[p]":
         return {word:wordOnly, pos : "person" };
+
       case "[n]":
         return {word:wordOnly, pos : "noun" };
-        
+
       case "[v]":
-      return {word:wordOnly, pos : "verb" };
+        return {word:wordOnly, pos : "verb" };
       
       case  "[a]":
-      return {word:wordOnly, pos : "adjective" };
+        return {word:wordOnly, pos : "adjective" };
       
       case  "[f]":
-      return {word:wordOnly, pos : "food" };
+        return {word:wordOnly, pos : "food" };
 
       case  "[s]":
-      return {word:wordOnly, pos : "shapes" };
+        return {word:wordOnly, pos : "shapes" };
 
       case  "[nu]":
-      return {word:wordOnly, pos : "number" };
+        return {word:wordOnly, pos : "number" };
 
     }  
   })
@@ -185,7 +186,14 @@ getRawStory()
       }
       
     }
-
+    editParagraph.addEventListener("keypress", e => {
+      //console.log(e.keyCode);
+      //console.log(e.target);
+      if (e.key === "Enter") {
+        e.target.nextElementSibling.focus()
+      }
+    })
+    
     // console.log('processedStory  :  '+processedStory);
 
   });
