@@ -1,3 +1,4 @@
+// 1- when we erase the text inside the input field the highlighted text is removed peranently
 /**
  * 
  
@@ -31,17 +32,15 @@
 function parseStory(rawStory) {
   // Your code here.
   const storyWords = rawStory.split(' ');
-  // console.log(storyWords);
+  
   //all regex
   const rex= /\[.*\]/gi;
   const  objsOfWords = storyWords.map(word=> {
     const wordOnly = word.replace(word.match(rex), "");
     let posRe = word.match(rex);
-  
-    //  console.log(posRe)
-     
+       
   if( posRe===null){
-    // console.log("noPos===null")
+    
     return {word:wordOnly};
   }
   posRe= posRe[0];
@@ -72,31 +71,8 @@ function parseStory(rawStory) {
 
     }  
   })
-  // console.log(objsOfWords)
 
-
-
-
-//old code
- /*  const objsOfWords= [];
-  for ( const word of storyWords){
-    if ((word.match(allMatcher)) !== null){
-      objsOfWords.push({word: word, pos:word })
-    }else {
-      objsOfWords.push({word: word})
-    }
-  }
-  console.log(objsOfWords) */
-  /* 
-  const wordObjs = storyWords.map(word => {
-    //console.log(word.match(allMatcher))
-    if ((word.match(allMatcher)) !== null){
-      objsOfWords.push({word: word, pos:word })
-    }
-    }); */
-  
-
-  
+    console.log(objsOfWords) 
   return objsOfWords; 
 }
 
@@ -119,83 +95,82 @@ getRawStory()
     
     // word is : {word : "some word", pos: "adjective"}
     for (let word of processedStory){
-      //if (pos in word)
-      // if (pos in word){
-      //   previewDiv.innerHTML +=`<input type="text" placeholder=${word.pos}>`
-      // }
-      // console.log(word.pos)
-
-      // const inputs = document.querySelectorAll("input")
-      // const highlited = document.querySelectorAll("mark")
-      // for (const ele of inputs) {
-        
-      // }
-    
-      
+       
       if (word.word !== "." && word.word !== ","){
-        //console.log(word.word);
+      
           if (word.pos){
-            // console.log("inside if")
             const input = document.createElement("input");
+            const whiteSpace = document.createElement("span");
+            whiteSpace.innerText = " ";
             input.setAttribute("maxlength", "20");
-            // input.setAttribute("type", "text");
-            // input.setAttribute("placeholder", `${word.pos}`);
-            
-            //alternative input- trying to add space around input, also dot/commas doesnt show in edit mode
-            //  editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//doesnt work becuase placeholder doesnt change in console.log
-            //  const input= document.querySelector("input");
-
-            const output = document.createElement("mark");
-            output.innerHTML+=`${word.word}`;
-            
+            input.setAttribute("type", "text");
+            input.setAttribute("placeholder", `${word.pos}`);
+            //whitespace before input in edit
+            editParagraph.appendChild(whiteSpace);
             editParagraph.appendChild(input);
-            previewParagraph.appendChild(output);
-            // console.log("hi",input)
-            // console.log("hi", output)
-            input.addEventListener("input", (e) => {
-              console.log(e.target)
-              // console.log("hello")
-               output.innerHTML = input.value;
-            })
-           
-            
 
-            //old code
-            // editParagraph.innerHTML +=` <input type="text" maxlength="20" placeholder=${word.pos} >`;//  ?? id=${word.pos}
-            // previewParagraph.innerHTML += ` <mark>${word.word}</mark>`;//?? id=${word.pos}
-            //if word has a pos then make the input live changing
-            /* const input= document.querySelector(`#${word.pos}`);
-            input.addEventListener("change",(e)=>{
-              let update= e.target.value;
-              const span= document.querySelector(`#${word.pos}`);
-              span.innerText=update;
-            }) */
-            // console.log(input)
-            // const input = document.querySelector("input")
-            // input.addEventListener("input", e => {
-            // console.log("hello")
-            // })
-          }else {
-            previewParagraph.innerHTML += ` ${word.word}`;
-            editParagraph.innerHTML += ` ${word.word}`;
+            
+            const whiteSpace2 = document.createElement("span");
+            whiteSpace2.innerText = " ";
+            const output = document.createElement("mark");
+            output.innerText+=` ${word.word}`;
+            //whitespace before input in edit
+            previewParagraph.appendChild(whiteSpace2);
+            previewParagraph.appendChild(output);
+            
+            input.addEventListener("input", (e) => {
+              
+               output.innerHTML = input.value;
+               //update the obj word in arrOfObj
+               if (input.value){
+                input.setAttribute("class", "filled");
+                // input.setAttribute("class", ".border border-0")
+                word.word= input.value;
+                
+                output.setAttribute("class", "filled");
+                
+               }else {
+                
+                input.removeAttribute("class", "filled");
+                
+                 word.word=`${word.pos}`; 
+                 output.innerText=`${word.word}`
+                }
+            })
+            
+          }else {//normal word + space before word
+            const p = document.createElement("span")
+            p.innerText = ` ${word.word}`
+            previewParagraph.appendChild(p)
+            const p2 = document.createElement("span")
+            p2.innerText = ` ${word.word}`
+            editParagraph.appendChild(p2)
           }
-      } else  /* if (word.word === "." || word.word === ",")  */ {
-        // console.log(word.word)
-        previewParagraph.innerHTML += `${word.word}`;
-        //console.log("punctuation");
+      } else  { //dot and comma with no space
+        const p = document.createElement("span");
+        p.innerText= `${word.word}`;
+        previewParagraph.appendChild(p);
+        
+        const p2 = document.createElement("span");
+        p2.innerText= `${word.word}`;
+        editParagraph.appendChild(p2);
       }
       
-    }
-    editParagraph.addEventListener("keypress", e => {
-      //console.log(e.keyCode);
-      //console.log(e.target);
-      if (e.key === "Enter") {
-        e.target.nextElementSibling.focus()
-      }
-    })
-    
-    // console.log('processedStory  :  '+processedStory);
+    } // THE END OF THE LOOP
 
+    //keypress event - next input
+    const inputFields = document.querySelectorAll("input");
+      for (let i=0; i<inputFields.length; i++){
+        inputFields[i].addEventListener("keypress", e=>{   
+          if (e.key === "Enter" ){
+            if (i===inputFields.length -1){
+              inputFields[0].focus()
+            } else {
+            inputFields[i+1].focus();
+            }
+          }
+        })
+      }
   });
 
   
