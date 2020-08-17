@@ -48,10 +48,12 @@ span {
 input {
     transition: 0.5s;
     width: 6rem;
-    border-width: 2px;
+    border-width: 2px; /* doesnt work*/
+    border-radius: 2px; /* doesnt work*/
     background-color: white;
     
 }
+
 input::placeholder{
     text-align: center;
     color: var(--green);
@@ -102,7 +104,9 @@ input::placeholder{
  }
   
  .madLibsPreview,
- .save{
+ .save,
+ .load,
+ .clear{
     margin-bottom: 4rem;
  }
  
