@@ -159,7 +159,7 @@ getRawStory()
 
     //keypress event - next input
     const inputFields = document.querySelectorAll("input");
-      for (let i=0; i<inputFields.length; i++){
+    for (let i=0; i<inputFields.length; i++){
         inputFields[i].addEventListener("keypress", e=>{   
           if (e.key === "Enter" ){
             if (i===inputFields.length -1){
@@ -169,7 +169,77 @@ getRawStory()
             }
           }
         })
+    }
+
+
+   //button save-load-reset
+    const saveBtn = document.querySelector(".save");
+    const loadBtn= document.querySelector(".load");
+    const resetBtn= document.querySelector(".clear");
+    const marks= document.querySelectorAll("mark");
+
+    //initialize the toast
+    let option = false;
+    let toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    console.log(toastElList)
+    let toastList = toastElList.map(function (toastEl) {
+      return new bootstrap.Toast(toastEl, option)
+    });
+
+    saveBtn.addEventListener("click", e => {
+      for (let i = 0; i < inputFields.length; i++) {
+       /*  if(inputFields[i]=""){
+          toastList[4].show()
+        }else {
+          const data = inputFields[i].value;
+        localStorage.setItem(`inputNum${i}`, data)
+        toastList[0].show()
+        }
+ */
+        if (inputFields[i].value){
+        const data = inputFields[i].value;
+        localStorage.setItem(`inputNum${i}`, data)
+        toastList[0].show()
+      }else if {
+        toastList[4].show()
       }
+      
+      
+    
+    }
+
+  });
+
+    loadBtn.addEventListener("click", e => {
+      if (localStorage.length === 0){
+        toastList[3].show()
+      }else{
+        for (let i = 0; i < inputFields.length; i++) {
+          
+          const data = localStorage.getItem(`inputNum${i}`);
+          if (data){
+            inputFields[i].value=data;
+            marks[i].innerText = data;
+            inputFields[i].setAttribute("class", "filled");
+            marks[i].setAttribute("class", "filled");
+          }        
+        }
+        toastList[1].show()
+      }
+    });
+
+    resetBtn.addEventListener("click", e => {
+      for (let i=0; i<inputFields.length;i++){
+        inputFields[i].value="";
+        marks[i].innerText = inputFields[i].placeholder;
+        inputFields[i].removeAttribute("class", "filled");
+        marks[i].removeAttribute("class", "filled");
+      }
+      
+      localStorage.clear()
+      toastList[2].show()
+    });
+    
   });
 
   
