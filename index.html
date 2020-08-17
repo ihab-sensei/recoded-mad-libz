@@ -9,37 +9,36 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
   <body>
-    <div class="container">
-  
+      
+      
       <div class="container">
-      <div class="jumbotron text-center  vertical-center" data-aos="fade-up">
+      <div class="jumbotron text-center  vertical-center" >
         <div class="container my-auto ">
-          <h1 class="display-1">Madlibs</h1>
-          <p class="display-6">Re:Coded</p>
-          <p>Made with &#10084; By Ihab & Fadime</p>
-          <a href="#story" class="btn  btn-success ">Get started</a>
+          <h1 class="display-1" data-aos="slide-down" >Madlibs</h1>
+          <p class="display-6" data-aos="slide-up" data-aos-delay="200">Re:Coded</p>
+          <p data-aos="zoom-in" data-aos-delay="500">Made with &#10084; By <a href="https://github.com/ihab-sensei" class="link-warning">Ihab</a> & <a href="https://github.com/fadime94" class="link-warning">Fadime</a></p>
+          <a href="#story" class="btn  btn-success " data-aos="fade" data-aos-delay="600" data-aos-duration="2000">Get started</a>
         </div>
       </div>
       </div>
       <div id="story" class="container">
         <div class="row">
-          <div class='madLibsEdit col-md-6 m-b-5' data-aos="fade-right"
+          <div class='madLibsEdit col-md-6 m-b-5' data-aos="zoom-in-up"
           >
             
           </div>
-          <div class='madLibsPreview col-md-6 m-b-5' data-aos="fade-left" 
+          <div class='madLibsPreview col-md-6 m-b-5' data-aos="zoom-in-up" 
           >
             
           </div>
         </div>
-        <div class="row" data-aos="fade-up" data-aos-offset="175" data-aos-delay="100">
-          <button class="btn btn-success col-sm-1 mx-auto save" >Save</button>
-          <button class="btn btn-success col-sm-1 mx-auto load">Load</button>
-          <button class="btn btn-success col-sm-1 mx-auto clear" >Reset</button>
+        <div class=" d-flex justify-content-around flex-row">
+          <button class="btn btn-success px-4 save" data-aos="fade-up" data-aos-offset="90" data-aos-delay="50" >Save</button>
+          <button class="btn btn-success px-4 load" data-aos="fade-up" data-aos-offset="90" data-aos-delay="150">Load</button>
+          <button class="btn btn-success px-4 clear" data-aos="fade-up" data-aos-offset="90" data-aos-delay="250" >Reset</button>
         </div>
       </div>
     
-</div>
 <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
   <!-- Position it -->
   <div style="position: fixed; top: 0; right: 0;">
